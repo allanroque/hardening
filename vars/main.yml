@@ -1,0 +1,28 @@
+---
+# vars file for hardening
+unnecessary_services:
+  - postfix
+  - telnet
+
+unnecessary_software:
+  - tcpdump
+  - wpa_supplicant
+
+necessary_software:
+  - net-tools
+  - bind-utils
+  - wget
+  - vim
+  - tree
+  - sysstat
+  - git
+
+cockpit_software:
+  - cockpit
+  - cockpit-dashboard
+  - cockpit-system
+  - cockpit-storaged
+  - cockpit-bridge
+  - cockpit-podman
+  - cockpit-machines
+  - cockpit-doc

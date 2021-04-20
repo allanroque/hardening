@@ -1,0 +1,17 @@
+---
+# handlers file for hardening
+- name: Enable and Restart the cockpit service
+  service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: yes
+  loop:
+    - cockpit.socket
+    - cockpit
+  tags: cockpit
+
+- name: Enable and Reload SSH service
+  service:
+    name: sshd
+    state: reloaded
+    enabled: yes

@@ -1,0 +1,75 @@
+---
+# tasks file for hardening
+- name: Upgrade all packages (only security updates)
+  package:
+    name: "*"
+    state: latest
+  tags: updates
+
+- name: Remove undesirable packages
+  package:
+    name: "{{ unnecessary_software }}"
+    state: absent
+  tags: absent_packages
+
+- name: Stop and disable unnecessary services
+  service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: no
+  with_items: "{{ unnecessary_services }}"
+  ignore_errors: yes
+  tags: stop_services
+
+- name: Install necessary Software
+  package:
+    name: "{{ necessary_software }}"
+    state: present
+  tags: present_packages
+
+- name: Install Cockpit package
+  package:
+    name: "{{ cockpit_software }}"
+    state: present
+  tags: cockpit
+  notify: "Enable and Restart the cockpit service"
+
+- name: Add the cockpit service to firewalld to open port 9090 in the firewall
+  firewalld:
+    service: cockpit
+    permanent: yes
+    state: enabled
+    immediate: yes
+  ignore_errors: yes #ignore if firewalld is not currently runnig
+  tags: cockpit
+
+- name: Set a message of the day
+  copy:
+    dest: /etc/motd
+    src: files/motd
+    owner: root
+    group: root
+    mode: 0644
+  tags: banner
+
+- name: Set a login banner
+  copy:
+    dest: "{{ item }}"
+    src: files/issue
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - /issue
+    - /issue.net
+  tags: banner
+
+- name: Add hardened SSH config
+  copy:
+    dest: /etc/ssh/sshd_config
+    src: files/sshd_config
+    owner: root
+    group: root
+    mode: 0600
+  notify: Enable and Reload SSH service
+  tags: ssh
