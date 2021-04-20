@@ -16,6 +16,7 @@ necessary_software:
   - tree
   - sysstat
   - git
+  - traceroute
 
 cockpit_software:
   - cockpit
