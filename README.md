@@ -53,7 +53,7 @@ cockpit_software:
   - cockpit-bridge
   - cockpit-podman
   - cockpit-machines
-  - cockpit-do
+  - cockpit-doc
 ```
 
 Example Playbook
