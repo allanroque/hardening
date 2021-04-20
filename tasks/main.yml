@@ -1,6 +1,6 @@
 ---
 # tasks file for hardening
-- name: Upgrade all packages (only security updates)
+- name: Upgrade all packages
   package:
     name: "*"
     state: latest

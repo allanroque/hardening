@@ -1,31 +1,69 @@
-Role Name
+Ansible hardening
 =========
 
-A brief description of the role goes here.
+This roles configure the Basic Hardening.
+
+Included Adjusts:
+ - Upgrade all packages
+ - Install necessary Software
+ - Remove undesirable packages
+ - Stop and disable unnecessary services
+ - Install and Cockpit
+ - Install and configure motd and issue
+ - Add hardened SSH config
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+None
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+```
+unnecessary_services:
+  - postfix
+  - telnet
+```
 
-Dependencies
-------------
+```
+unnecessary_software:
+  - tcpdump
+  - wpa_supplicant
+```
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+```
+necessary_software:
+  - net-tools
+  - bind-utils
+  - wget
+  - vim
+  - tree
+  - sysstat
+  - git
+  - traceroute
+```
+
+```
+cockpit_software:
+  - cockpit
+  - cockpit-dashboard
+  - cockpit-system
+  - cockpit-storaged
+  - cockpit-bridge
+  - cockpit-podman
+  - cockpit-machines
+  - cockpit-do
+```
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
+```
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - role: allanroque.hardening
+```
 
 License
 -------
@@ -35,4 +73,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+https://github.com/allanroque/
