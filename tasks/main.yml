@@ -44,32 +44,26 @@
   tags: cockpit
 
 - name: Set a message of the day
-  copy:
+  template:
     dest: /etc/motd
-    src: files/motd
+    src: templates/motd.j2
     owner: root
     group: root
     mode: 0644
   tags: banner
 
-- name: Set a login banner
-  copy:
-    dest: "{{ item }}"
-    src: files/issue
-    owner: root
-    group: root
-    mode: 0644
-  with_items:
-    - /issue
-    - /issue.net
-  tags: banner
+- name: Disable IPV6 in /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    regexp: '^::1'
+    state: absent
 
-- name: Add hardened SSH config
-  copy:
-    dest: /etc/ssh/sshd_config
-    src: files/sshd_config
+- name: Disable IPV6 in /etc/sysconfig/network
+  lineinfile:
+    path: /etc/sysconfig/network
+    regexp: '^NETWORKING_IPV6=.*'
+    line: 'NETWORKING_IPV6=no/g'
     owner: root
     group: root
-    mode: 0600
-  notify: Enable and Reload SSH service
-  tags: ssh
+    owner: 0644
+
