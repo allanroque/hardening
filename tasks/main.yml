@@ -65,5 +65,4 @@
     line: 'NETWORKING_IPV6=no/g'
     owner: root
     group: root
-    owner: 0644
-
+    mode: 0644

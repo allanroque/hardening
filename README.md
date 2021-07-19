@@ -10,7 +10,6 @@ Included Adjusts:
  - Stop and disable unnecessary services
  - Install and Cockpit
  - Install and configure motd and issue
- - Add hardened SSH config
 
 Requirements
 ------------
